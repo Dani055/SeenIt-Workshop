@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PostInfo } from '../../shared/models/Post-info';
 import { Router } from '@angular/router';
 import { PostService } from 'src/app/core/services/post.service';
+
 
 @Component({
   selector: 'app-post-info',
@@ -12,6 +13,7 @@ export class PostInfoComponent implements OnInit {
   @Input() post: PostInfo;
   @Input() desc: string;
   @Input() rank: number;
+  @Output() deletePostEmitter = new EventEmitter<string>();
   constructor(private router: Router,private postService: PostService,) { }
 
   ngOnInit() {
@@ -22,9 +24,6 @@ export class PostInfoComponent implements OnInit {
   }
 
   deletePost(id: string) {
-    this.postService.deletePost(id)
-      .subscribe(() => {
-        this.router.navigate(['/posts']);
-      })
+    this.deletePostEmitter.emit(id);
   }
 }

@@ -40,10 +40,4 @@ export class PostListComponent implements OnInit {
     return post['_acl']['creator'] === localStorage.getItem('userId');
   }
 
-  deletePost(id: string) {
-    this.postService.deletePost(id)
-      .subscribe(() => {
-        this.router.navigate(['/posts']);
-      })
-  }
 }
