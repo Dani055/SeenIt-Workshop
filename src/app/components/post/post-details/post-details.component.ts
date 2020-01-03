@@ -20,7 +20,9 @@ export class PostDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private commentService: CommentService
+    private commentService: CommentService,
+    private postService: PostService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -37,6 +39,11 @@ export class PostDetailsComponent implements OnInit {
       .subscribe(() => {
         this.loadComments();
       })
+  }
+  deletePost(id){
+    this.postService.deletePost(id).subscribe((data) => {
+      this.router.navigate(['/posts'])
+    })
   }
 }
 

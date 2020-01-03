@@ -32,7 +32,14 @@ export class PostListComponent implements OnInit {
   onDeletePost(id: string) {
     this.postService.deletePost(id)
       .subscribe(() => {
-        this.allPosts$ = this.postService.getAll();
+        this.route.url.subscribe((segmentArr: UrlSegment[]) => {
+          const segment = segmentArr[0];
+          if (!segment) {
+            this.allPosts$ = this.postService.getAll()
+          } else {
+            this.allPosts$ = this.postService.getUserPosts()
+          }
+        })
       })
   }
 

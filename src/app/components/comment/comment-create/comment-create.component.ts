@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { CommentService } from 'src/app/core/services/comment.service';
 import { NgForm } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-comment-create',
@@ -9,17 +10,17 @@ import { NgForm } from '@angular/forms';
 })
 export class CommentCreateComponent implements OnInit {
   @ViewChild('f') createCommentForm: NgForm;
-  @Input() postId: string;
+  // @Input() postId: string;
   @Output() postCommentEmitter = new EventEmitter<void>()
 
-  constructor(private commentService: CommentService) { }
+  constructor(private commentService: CommentService, private route: ActivatedRoute,) { }
 
   ngOnInit() {
   }
 
   postComment() {
     const body = this.createCommentForm.value;
-    body['postId'] = this.postId
+    body['postId'] = this.route.snapshot.params['id']
     body['author'] = localStorage.getItem('username');
 
     this.commentService
